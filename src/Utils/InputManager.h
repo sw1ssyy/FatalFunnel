@@ -19,7 +19,10 @@ public:
 
     bool IsShooting() const;
 
-    bool IsPlayerMoving() const;
+    bool IsPlayerMoving();
+
+    bool IsPlayerSprinting()const;
+
     Vector2 GetPlayerMovementDirection();
 
 

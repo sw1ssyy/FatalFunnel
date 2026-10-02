@@ -14,35 +14,42 @@ bool InputManager::IsShooting()const
     return IsAimHeld() && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
 }
 
-bool InputManager::IsPlayerMoving() const
+bool InputManager::IsPlayerMoving()
 {
-    return movementVector.x == 1 || movementVector.x == -1 || movementVector.y == 1 || movementVector.y == -1;
+    Vector2 movement = GetPlayerMovementDirection();
+
+    return movement.x == 1 || movement.x == -1 || movement.y == 1 || movement.y == -1;
+}
+
+bool InputManager::IsPlayerSprinting()const
+{
+    if (IsKeyDown(KEY_LEFT_SHIFT))
+    {
+        TraceLog(LOG_INFO, "Player Input: SPRINT");
+    }
+
+
+    return IsKeyDown(KEY_LEFT_SHIFT);
 }
 
 Vector2 InputManager::GetPlayerMovementDirection()
 {
+    movementVector = {0,0};
+
     if (IsKeyDown(KEY_A))
     {
-        TraceLog(LOG_INFO, "Player Input: LEFT");
-
         movementVector.x = -1;
     }
     if (IsKeyDown(KEY_D))
     {
-        TraceLog(LOG_INFO, "Player Input: RIGHT");
-
         movementVector.x = 1;
     }
     if (IsKeyDown(KEY_W))
     {
-        TraceLog(LOG_INFO, "Player Input: UP");
-
         movementVector.y = -1;
     }
     if (IsKeyDown(KEY_S))
     {
-        TraceLog(LOG_INFO, "Player Input: DOWN");
-
         movementVector.y = 1;
     }
 

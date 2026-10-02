@@ -12,7 +12,7 @@ CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAn
     : idleAnimation(idleAnim), aimAnimation(aimAnim),shootAnimation(shootAnim),runAnimation(runAnim), reloadAnimation(reloadAnim)
 {}
 
-Character::Character(const CharacterAnimations& animations): animations(animations), characterRect({})
+Character::Character(const CharacterAnimations& animations): animations(animations), characterRect({}), movementSpeed(0)
 {
 }
 
@@ -58,6 +58,7 @@ void Character::Update(Vector2 worldMousePos)
     if (InputManager::GetInstance().IsAimHeld())
     {
         animations.idleAnimation.Stop();
+
         if (InputManager::GetInstance().IsShooting())
         {
             animations.shootAnimation.Start();
@@ -66,6 +67,10 @@ void Character::Update(Vector2 worldMousePos)
         {
             animations.aimAnimation.Start();
         }
+    }
+    if (InputManager::GetInstance().IsPlayerMoving())
+    {
+        HandleMovement();
     }
     else
     {
@@ -77,7 +82,17 @@ void Character::Update(Vector2 worldMousePos)
     rotation = atan2f(diff.y, diff.x) * RAD2DEG;
 }
 
+void Character::HandleMovement()
+{
+    Vector2 direction = InputManager::GetInstance().GetPlayerMovementDirection();
 
+    bool isSprinting = InputManager::GetInstance().IsPlayerSprinting();
+
+    movementSpeed = isSprinting? 6.5f : 4.0f;
+
+    characterRect.x += direction.x * movementSpeed;
+    characterRect.y += direction.y * movementSpeed;
+}
 
 void Character::DrawIdle(int index) const
 {

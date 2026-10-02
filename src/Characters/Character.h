@@ -33,6 +33,9 @@ public:
     void DrawShoot(int index) const;
 
     void DrawReload();
+
+    void HandleMovement();
+
     void Update(Vector2 worldMousePos);
 
      CharacterAnimations GetCharacterAnimations() const;
@@ -42,6 +45,7 @@ private:
 
     CharacterAnimations animations;
     Rectangle characterRect = {};
+    float movementSpeed;
     float rotation = {};
 };
 

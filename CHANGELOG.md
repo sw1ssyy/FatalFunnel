@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 - Raylib-based state machine with `MenuState` and `GameState`.
 - `Character` with idle/aim/shoot/reload animations, mouse-aim rotation, and an aiming line.
+- `Character` Implemented simple movement mechanics.
 - `Animation2D` for sprite-sheet frame playback.
 - `DrawUtils::DrawAnimationFrame` shared draw helper for animated, rotated sprites.
 - `InputManager` singleton for aim/shoot/movement input queries.
