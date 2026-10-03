@@ -16,6 +16,15 @@ struct GameConstants
     static constexpr float FRAME_TIME_120 = 0.00835;
 
     static constexpr int DEFAULT_MAGAZINE_SIZE = 30;
+
+    static constexpr float PLAYER_WALK_SPEED = 4.0f;
+    static constexpr float PLAYER_SPRINT_SPEED = 6.5f;
+
+    static constexpr float RELOAD_TIME_SECONDS = 0.4f;
+    static constexpr float SHOOT_TIME_SECONDS = 4 * FRAME_TIME_60;
+
+    static constexpr float CAMERA_ZOOM_DEFAULT = 0.7f;
+    static constexpr float CAMERA_ZOOM_AIM = 0.5f;
 };
 
 #endif //TOPDOWNSHOOTER_GAMECONSTANTS

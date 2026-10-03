@@ -6,19 +6,23 @@
 #include <cmath>
 
 #include "../Utils/DrawUtils.h"
-#include "../Utils/InputManager.h"
 
-CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim,Animation2D shootAnim, Animation2D runAnim, Animation2D reloadAnim)
-    : idleAnimation(idleAnim), aimAnimation(aimAnim),shootAnimation(shootAnim),runAnimation(runAnim), reloadAnimation(reloadAnim)
+CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim,
+                                         Animation2D runAnim, Animation2D reloadAnim)
+    : idleAnimation(idleAnim)
+    , aimAnimation(aimAnim)
+    , shootAnimation(shootAnim)
+    , runAnimation(runAnim)
+    , reloadAnimation(reloadAnim)
 {}
 
-Character::Character(const CharacterAnimations& animations): animations(animations), characterRect({}), movementSpeed(0)
-{
-}
+Character::Character(const CharacterAnimations& animations)
+    : animations(animations)
+{}
 
 Rectangle Character::GetRect() const
 {
-    return this->characterRect;
+    return characterRect;
 }
 
 void Character::SetPosition(const float x, const float y)
@@ -32,80 +36,116 @@ CharacterAnimations Character::GetCharacterAnimations() const
     return animations;
 }
 
+CharacterState Character::GetState() const
+{
+    return state;
+}
+
 int Character::GetCurrentAmmo() const
 {
     return currentAmmo;
 }
 
-
-void Character::Draw()
+void Character::Update(const PlayerInput& input, const Vector2 worldMousePos)
 {
-    if (InputManager::GetInstance().IsAimHeld())
-    {
-        if (InputManager::GetInstance().IsShooting() && GetCurrentAmmo() > 0)
-        {
-            DrawShoot(animations.shootAnimation.GetFrameIndex());
-        }
-        else
-        {
-            DrawAim(animations.aimAnimation.GetFrameIndex());
-        }
-    }
-    else
-    {
-        DrawIdle(animations.idleAnimation.GetFrameIndex());
-    }
+    UpdateState(input);
+    HandleMovement(input);
+    UpdateAnimations();
 
-}
-
-void Character::Update(Vector2 worldMousePos)
-{
-    if (InputManager::GetInstance().IsAimHeld())
-    {
-        animations.idleAnimation.Stop();
-
-        if (InputManager::GetInstance().IsShooting() && GetCurrentAmmo() > 0)
-        {
-            animations.shootAnimation.Start();
-        }
-        if (InputManager::GetInstance().IsReloading())
-        {
-            animations.reloadAnimation.Start();
-        }
-        else
-        {
-            animations.aimAnimation.Start();
-        }
-
-        if (InputManager::GetInstance().IsShotFired())
-        {
-            HandleShoot();
-        }
-    }
-    if (InputManager::GetInstance().IsPlayerMoving())
-    {
-        HandleMovement();
-    }
-    else
-    {
-        animations.idleAnimation.Start();
-    }
-
-    Vector2 diff = {worldMousePos.x - characterRect.x, worldMousePos.y - characterRect.y};
+    const Vector2 diff = {worldMousePos.x - characterRect.x, worldMousePos.y - characterRect.y};
 
     rotation = atan2f(diff.y, diff.x) * RAD2DEG;
 }
 
-void Character::HandleMovement()
+void Character::UpdateState(const PlayerInput& input)
 {
-    Vector2 direction = InputManager::GetInstance().GetPlayerMovementDirection();
+    if (state == CharacterState::Reload)
+    {
+        reloadTimer -= GetFrameTime();
 
-    bool isSprinting = InputManager::GetInstance().IsPlayerSprinting();
+        if (reloadTimer > 0.0f)
+        {
+            return;
+        }
 
-    movementSpeed = isSprinting? 6.5f : 4.0f;
+        currentAmmo = magazineSize;
+        SetState(CharacterState::Idle);
+    }
 
-    characterRect.x += direction.x * movementSpeed;
-    characterRect.y += direction.y * movementSpeed;
+    const bool wantsReload = input.reload && currentAmmo < magazineSize;
+
+    if (state == CharacterState::Shoot && !wantsReload)
+    {
+        shootTimer -= GetFrameTime();
+
+        if (shootTimer > 0.0f)
+        {
+            return;
+        }
+    }
+
+    if (wantsReload)
+    {
+        reloadTimer = GameConstants::RELOAD_TIME_SECONDS;
+        SetState(CharacterState::Reload);
+    }
+    else if (!input.aim)
+    {
+        SetState(CharacterState::Idle);
+    }
+    else if (input.fire && currentAmmo > 0)
+    {
+        // Each shot restarts the timer and the animation, even while already shooting.
+        shootTimer = GameConstants::SHOOT_TIME_SECONDS;
+        SetState(CharacterState::Shoot);
+        animations.shootAnimation.Reset();
+        HandleShoot();
+    }
+    else
+    {
+        SetState(CharacterState::Aim);
+    }
+}
+
+void Character::SetState(const CharacterState newState)
+{
+    if (newState == state)
+    {
+        return;
+    }
+
+    state = newState;
+    GetAnimation(state).Reset();
+}
+
+void Character::UpdateAnimations()
+{
+    animations.idleAnimation.Stop();
+    animations.aimAnimation.Stop();
+    animations.shootAnimation.Stop();
+    animations.reloadAnimation.Stop();
+
+    GetAnimation(state).Start();
+}
+
+Animation2D& Character::GetAnimation(const CharacterState characterState)
+{
+    switch (characterState)
+    {
+        case CharacterState::Aim:    return animations.aimAnimation;
+        case CharacterState::Shoot:  return animations.shootAnimation;
+        case CharacterState::Reload: return animations.reloadAnimation;
+        case CharacterState::Idle:
+        default:                     return animations.idleAnimation;
+    }
+}
+
+void Character::HandleMovement(const PlayerInput& input)
+{
+    const float speed = input.sprint ? GameConstants::PLAYER_SPRINT_SPEED : GameConstants::PLAYER_WALK_SPEED;
+
+    characterRect.x += input.move.x * speed;
+    characterRect.y += input.move.y * speed;
 }
 
 void Character::HandleShoot()
@@ -119,18 +159,33 @@ void Character::HandleShoot()
     currentAmmo--;
 }
 
-void Character::DrawIdle(int index) const
+void Character::Draw()
 {
-    DrawUtils::DrawAnimationFrame(animations.idleAnimation, index, { characterRect.x, characterRect.y }, rotation);
+    switch (state)
+    {
+        case CharacterState::Idle:   DrawIdle(GetAnimation(state).GetFrameIndex());   break;
+        case CharacterState::Aim:    DrawAim(GetAnimation(state).GetFrameIndex());    break;
+        case CharacterState::Shoot:  DrawShoot(GetAnimation(state).GetFrameIndex());  break;
+        case CharacterState::Reload: DrawReload(GetAnimation(state).GetFrameIndex()); break;
+    }
 }
 
-void Character::DrawAim(int index) const
+void Character::DrawIdle(const int index) const
 {
-    DrawUtils::DrawAnimationFrame(animations.aimAnimation, index, { characterRect.x, characterRect.y }, rotation);
+    DrawUtils::DrawAnimation(animations.idleAnimation, index, {characterRect.x, characterRect.y}, rotation);
 }
 
-void Character::DrawShoot(int index) const
+void Character::DrawAim(const int index) const
 {
-    DrawUtils::DrawAnimationFrame(animations.shootAnimation, index, { characterRect.x, characterRect.y }, rotation);
+    DrawUtils::DrawAnimation(animations.aimAnimation, index, {characterRect.x, characterRect.y}, rotation);
 }
 
+void Character::DrawShoot(const int index) const
+{
+    DrawUtils::DrawAnimation(animations.shootAnimation, index, {characterRect.x, characterRect.y}, rotation);
+}
+
+void Character::DrawReload(const int index) const
+{
+    DrawUtils::DrawAnimation(animations.reloadAnimation, index, {characterRect.x, characterRect.y}, rotation);
+}

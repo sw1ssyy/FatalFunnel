@@ -47,6 +47,12 @@ void Animation2D::Stop()
     isStarted = false;
 }
 
+void Animation2D::Reset()
+{
+    frameIndex = 0;
+    deltaTime = 0;
+}
+
 void Animation2D::Interpolate()
 {
     if (isStarted)

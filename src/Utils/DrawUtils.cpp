@@ -3,7 +3,7 @@
 //
 #include "DrawUtils.h"
 
-void DrawUtils::DrawAnimationFrame(const Animation2D& animation, int frameIndex, Vector2 position, float rotation)
+void DrawUtils::DrawAnimation(const Animation2D& animation, int frameIndex, Vector2 position, float rotation)
 {
     const Texture2D* texture = animation.GetTexture();
 

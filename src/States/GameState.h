@@ -11,7 +11,6 @@
 class GameState : public IState
 {
 public:
-
     explicit GameState(StateManager *manager);
 
     void Draw() override;
@@ -20,13 +19,11 @@ public:
     void OnExit() override;
 
     void ShakeCamera() const;
-
     void DrawAimingLine() const;
 
 private:
-
     Character character;
-    Camera2D camera;
+    Camera2D camera = {};
 };
 
 #endif //TOPDOWNSHOOTER_GAMESTATE

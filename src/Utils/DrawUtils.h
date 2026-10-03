@@ -6,7 +6,7 @@
 class DrawUtils
 {
 public:
-    static void DrawAnimationFrame(const Animation2D& animation, int frameIndex, Vector2 position, float rotation);
+    static void DrawAnimation(const Animation2D& animation, int frameIndex, Vector2 position, float rotation);
 };
 
 #endif //TOPDOWNSHOOTER_DRAWUTILS

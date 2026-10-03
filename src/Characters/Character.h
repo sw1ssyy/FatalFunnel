@@ -4,9 +4,11 @@
 
 #ifndef TOPDOWNSHOOTER_ICHARACTER
 #define TOPDOWNSHOOTER_ICHARACTER
+
 #include "raylib.h"
-#include "../Utils/Animation2D.h"
 #include "../Constants/GameConstants.h"
+#include "../Utils/Animation2D.h"
+#include "../Utils/InputManager.h"
 
 struct CharacterAnimations
 {
@@ -20,47 +22,55 @@ struct CharacterAnimations
                         Animation2D reloadAnim);
 };
 
+enum class CharacterState
+{
+    Idle,
+    Aim,
+    Shoot,
+    Reload
+};
 
 class Character
 {
 public:
-    Character(const CharacterAnimations &animations);
+    explicit Character(const CharacterAnimations &animations);
 
     Rectangle GetRect() const;
 
     void SetPosition(float x, float y);
 
-    void Draw();
-
-    void DrawIdle(int index) const;
-
-    void DrawAim(int index) const;
-
-    void DrawShoot(int index) const;
-
-    void DrawReload();
-
-    void HandleMovement();
-
-    void Update(Vector2 worldMousePos);
-
     CharacterAnimations GetCharacterAnimations() const;
-
+    CharacterState GetState() const;
     int GetCurrentAmmo() const;
 
-protected:
+    void Update(const PlayerInput &input, Vector2 worldMousePos);
+
+    void Draw();
+    void DrawIdle(int index) const;
+    void DrawAim(int index) const;
+    void DrawShoot(int index) const;
+    void DrawReload(int index) const;
 
 private:
+    void UpdateState(const PlayerInput &input);
+    void SetState(CharacterState newState);
+    void UpdateAnimations();
+    Animation2D &GetAnimation(CharacterState characterState);
+
+    void HandleMovement(const PlayerInput &input);
     void HandleShoot();
 
     CharacterAnimations animations;
+    CharacterState state = CharacterState::Idle;
+
     Rectangle characterRect = {};
-    float movementSpeed;
-    float rotation = {};
+    float rotation = 0.0f;
+
+    float reloadTimer = 0.0f;
+    float shootTimer = 0.0f;
 
     int magazineSize = GameConstants::DEFAULT_MAGAZINE_SIZE;
     int currentAmmo = GameConstants::DEFAULT_MAGAZINE_SIZE;
 };
-
 
 #endif //TOPDOWNSHOOTER_ICHARACTER

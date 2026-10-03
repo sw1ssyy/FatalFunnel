@@ -4,64 +4,31 @@
 
 #include "InputManager.h"
 
-bool InputManager::IsAimHeld() const
-{
-    return IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-}
+#include <cmath>
 
-bool InputManager::IsShooting()const
+void InputManager::Poll()
 {
-    return IsAimHeld() && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
-}
+    input.aim = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+    input.fire = input.aim && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+    input.reload = IsKeyPressed(KEY_R);
+    input.sprint = IsKeyDown(KEY_LEFT_SHIFT);
 
-bool InputManager::IsReloading()const
-{
-    return IsKeyPressed(KEY_R);
-}
+    Vector2 move = {
+        static_cast<float>(IsKeyDown(KEY_D)) - static_cast<float>(IsKeyDown(KEY_A)),
+        static_cast<float>(IsKeyDown(KEY_S)) - static_cast<float>(IsKeyDown(KEY_W))
+    };
 
-bool InputManager::IsShotFired() const
-{
-    return IsAimHeld() && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
-}
-
-bool InputManager::IsPlayerMoving()
-{
-    Vector2 movement = GetPlayerMovementDirection();
-
-    return movement.x == 1 || movement.x == -1 || movement.y == 1 || movement.y == -1;
-}
-
-bool InputManager::IsPlayerSprinting()const
-{
-    if (IsKeyDown(KEY_LEFT_SHIFT))
+    // Normalize so diagonals aren't faster than cardinal movement.
+    const float length = std::sqrt(move.x * move.x + move.y * move.y);
+    if (length > 0.0f)
     {
-        TraceLog(LOG_INFO, "Player Input: SPRINT");
+        move.x /= length;
+        move.y /= length;
     }
-
-
-    return IsKeyDown(KEY_LEFT_SHIFT);
+    input.move = move;
 }
 
-Vector2 InputManager::GetPlayerMovementDirection()
+const PlayerInput& InputManager::Get() const
 {
-    movementVector = {0,0};
-
-    if (IsKeyDown(KEY_A))
-    {
-        movementVector.x = -1;
-    }
-    if (IsKeyDown(KEY_D))
-    {
-        movementVector.x = 1;
-    }
-    if (IsKeyDown(KEY_W))
-    {
-        movementVector.y = -1;
-    }
-    if (IsKeyDown(KEY_S))
-    {
-        movementVector.y = 1;
-    }
-
-    return movementVector;
+    return input;
 }

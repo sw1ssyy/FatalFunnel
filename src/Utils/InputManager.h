@@ -6,6 +6,15 @@
 #define TOPDOWNSHOOTER_INPUTMANAGER
 #include "raylib.h"
 
+// Snapshot of everything the player is asking for this frame.
+struct PlayerInput
+{
+    Vector2 move = {};      // normalized movement direction, (0,0) when idle
+    bool aim = false;
+    bool fire = false;      // only true while aiming
+    bool reload = false;    // true only on the frame the key is pressed
+    bool sprint = false;
+};
 
 class InputManager
 {
@@ -15,23 +24,13 @@ public:
         return instance;
     }
 
-    bool IsAimHeld() const;
+    // Reads the hardware once. Call exactly once per frame before consuming input.
+    void Poll();
 
-    bool IsShooting() const;
-
-    bool IsReloading() const;
-
-    bool IsShotFired() const;
-
-    bool IsPlayerMoving();
-
-    bool IsPlayerSprinting()const;
-
-    Vector2 GetPlayerMovementDirection();
-
+    const PlayerInput& Get() const;
 
 private:
-    Vector2 movementVector = {};
+    PlayerInput input;
 
     InputManager() = default;
     ~InputManager() = default;

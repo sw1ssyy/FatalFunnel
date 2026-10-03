@@ -15,6 +15,7 @@ public:
     void Interpolate();
     void Start();
     void Stop();
+    void Reset();
 
 private:
     Texture2D* texture;
