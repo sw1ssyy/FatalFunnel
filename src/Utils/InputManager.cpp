@@ -14,6 +14,16 @@ bool InputManager::IsShooting()const
     return IsAimHeld() && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
 }
 
+bool InputManager::IsReloading()const
+{
+    return IsKeyPressed(KEY_R);
+}
+
+bool InputManager::IsShotFired() const
+{
+    return IsAimHeld() && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+}
+
 bool InputManager::IsPlayerMoving()
 {
     Vector2 movement = GetPlayerMovementDirection();

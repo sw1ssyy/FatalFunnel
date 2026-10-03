@@ -19,6 +19,10 @@ public:
 
     bool IsShooting() const;
 
+    bool IsReloading() const;
+
+    bool IsShotFired() const;
+
     bool IsPlayerMoving();
 
     bool IsPlayerSprinting()const;

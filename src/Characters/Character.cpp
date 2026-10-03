@@ -32,12 +32,17 @@ CharacterAnimations Character::GetCharacterAnimations() const
     return animations;
 }
 
+int Character::GetCurrentAmmo() const
+{
+    return currentAmmo;
+}
+
 
 void Character::Draw()
 {
     if (InputManager::GetInstance().IsAimHeld())
     {
-        if (InputManager::GetInstance().IsShooting())
+        if (InputManager::GetInstance().IsShooting() && GetCurrentAmmo() > 0)
         {
             DrawShoot(animations.shootAnimation.GetFrameIndex());
         }
@@ -59,13 +64,22 @@ void Character::Update(Vector2 worldMousePos)
     {
         animations.idleAnimation.Stop();
 
-        if (InputManager::GetInstance().IsShooting())
+        if (InputManager::GetInstance().IsShooting() && GetCurrentAmmo() > 0)
         {
             animations.shootAnimation.Start();
+        }
+        if (InputManager::GetInstance().IsReloading())
+        {
+            animations.reloadAnimation.Start();
         }
         else
         {
             animations.aimAnimation.Start();
+        }
+
+        if (InputManager::GetInstance().IsShotFired())
+        {
+            HandleShoot();
         }
     }
     if (InputManager::GetInstance().IsPlayerMoving())
@@ -92,6 +106,17 @@ void Character::HandleMovement()
 
     characterRect.x += direction.x * movementSpeed;
     characterRect.y += direction.y * movementSpeed;
+}
+
+void Character::HandleShoot()
+{
+    if (currentAmmo <= 0)
+    {
+        TraceLog(LOG_INFO, "Character: out of ammo");
+        return;
+    }
+
+    currentAmmo--;
 }
 
 void Character::DrawIdle(int index) const
