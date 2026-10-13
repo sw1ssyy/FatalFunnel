@@ -12,6 +12,7 @@ public:
     Texture2D* GetTexture() const;
     int GetMaxFrames() const;
     int GetFrameIndex()const;
+    bool IsFinished() const;
     void Interpolate();
     void Start();
     void Stop();
@@ -23,6 +24,7 @@ private:
     float deltaTime;
     int frameIndex;
     bool isStarted;
+    bool isFinished;
     float tickRate;
     int sheetColumns;
     int sheetRows;

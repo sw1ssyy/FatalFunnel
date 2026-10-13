@@ -7,7 +7,7 @@
 
 
 Animation2D::Animation2D(Texture2D* texture, int maxFrames, float tickRate, int columns, int rows)
-    : texture(texture), maxFrames(maxFrames),frameIndex(0),deltaTime(0),isStarted(false), tickRate(tickRate),sheetColumns(columns), sheetRows(rows)
+    : texture(texture), maxFrames(maxFrames),frameIndex(0),deltaTime(0),isStarted(false),isFinished(false), tickRate(tickRate),sheetColumns(columns), sheetRows(rows)
 {}
 
 Rectangle Animation2D::GetSourceRect(int frameIndex) const
@@ -35,6 +35,11 @@ int Animation2D::GetFrameIndex() const
     return frameIndex;
 }
 
+bool Animation2D::IsFinished() const
+{
+    return isFinished;
+}
+
 void Animation2D::Start()
 {
     isStarted = true;
@@ -51,6 +56,7 @@ void Animation2D::Reset()
 {
     frameIndex = 0;
     deltaTime = 0;
+    isFinished = false;
 }
 
 void Animation2D::Interpolate()
@@ -64,9 +70,10 @@ void Animation2D::Interpolate()
             deltaTime = 0;
             frameIndex++;
         }
-        if (frameIndex > maxFrames)
+        if (frameIndex >= maxFrames)
         {
             frameIndex = 0;
+            isFinished = true;
         }
     }
 }

@@ -8,15 +8,8 @@
 
 struct AssetConstants
 {
-    // Sprites
-    static constexpr const char* OPERATOR_NVG_EQUIPPED = "../resources/Operator/operator_nvg_equipped.png";
-    static constexpr const char* OPERATOR_NVG_STOWED = "../resources/Operator/operator_nvg_stowed.png";
-
-    // Anims
-
     // NVG
     static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM = "../resources/Operator/nvg_equipped/operator_walk_aim_nvg_equipped.png";
-    static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_WALK_LOW = "../resources/Operator/nvg_equipped/operator_walk_low_nvg_equipped.png";
     static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_IDLE = "../resources/Operator/nvg_equipped/operator_nvg_equipped_idle_sheet.png";
     static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW = "../resources/Operator/nvg_equipped/operator_lowready_nvg_equipped_idle_sheet.png";
     static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH = "../resources/Operator/nvg_equipped/operator_fire_with_flash_nvg_equipped_sheet.png";

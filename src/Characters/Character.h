@@ -66,7 +66,6 @@ private:
     Rectangle characterRect = {};
     float rotation = 0.0f;
 
-    float reloadTimer = 0.0f;
     float shootTimer = 0.0f;
 
     int magazineSize = GameConstants::DEFAULT_MAGAZINE_SIZE;

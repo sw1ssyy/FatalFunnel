@@ -23,10 +23,7 @@ void TextureManager::Load(const std::string& assetId)
 
 void TextureManager::LoadAll()
 {
-    Load(AssetConstants::OPERATOR_NVG_EQUIPPED);
-    Load(AssetConstants::OPERATOR_NVG_STOWED);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_LOW);
     Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_WALK_AIM);
     Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_WALK_LOW);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE);
