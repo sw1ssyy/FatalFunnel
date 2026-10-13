@@ -1,5 +1,5 @@
 //
-// Created by johnc on 26/09/2026.
+// Created by sw1ssyy on 26/09/2026.
 //
 
 #ifndef TOPDOWNSHOOTER_GAMESTATE
@@ -7,7 +7,7 @@
 
 #include "IState.h"
 #include "../Characters/Character.h"
-
+#include "../UI/GameUI.h"
 class GameState : public IState
 {
 public:
@@ -22,6 +22,7 @@ public:
     void DrawAimingLine() const;
 
 private:
+    GameUI ui = {camera, character};
     Character character;
     Camera2D camera = {};
 };

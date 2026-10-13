@@ -25,11 +25,11 @@ namespace
 GameState::GameState(StateManager *manager)
     : IState(manager)
     , character(CharacterAnimations(
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 24, GameConstants::FRAME_TIME_60, 5, 5),
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 24, GameConstants::FRAME_TIME_60, 5, 5),
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 5, GameConstants::FRAME_TIME_120, 5, 1),
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM, 24, GameConstants::FRAME_TIME_60, 5, 5),
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 24, GameConstants::FRAME_TIME_60, 5, 5)))
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6, 5),
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6, 5),
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM, 30, GameConstants::FRAME_TIME_60, 6, 5),
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)))
 {}
 
 void GameState::Draw()
@@ -38,7 +38,7 @@ void GameState::Draw()
     BeginMode2D(camera);
     character.Draw();
     DrawAimingLine();
-    DrawText(std::to_string(character.GetCurrentAmmo()).c_str(), 20, 20, 60, RED);
+    ui.DrawAmmo();
     EndMode2D();
 }
 
@@ -52,24 +52,28 @@ void GameState::Update()
     InputManager::GetInstance().Poll();
     const PlayerInput& input = InputManager::GetInstance().Get();
 
-    if (input.fire)
+    camera.zoom = GameConstants::CAMERA_ZOOM_DEFAULT;
+
+    if (input.aim)
     {
-        ShakeCamera();
+        camera.zoom = GameConstants::CAMERA_ZOOM_AIM;
     }
 
     const Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), camera);
 
     character.Update(input, worldMousePos);
+
+    camera.target = {character.GetRect().x, character.GetRect().y};
 }
 
 void GameState::OnEnter()
 {
+    character.SetPosition(400, 1600);
+
     camera.target = {character.GetRect().x, character.GetRect().y};
-    camera.offset = {};
+    camera.offset = {GameConstants::SCREEN_WIDTH / 2,GameConstants::SCREEN_HEIGHT / 2};
     camera.rotation = 0.0f;
     camera.zoom = GameConstants::CAMERA_ZOOM_DEFAULT;
-
-    character.SetPosition(400, 400);
 }
 
 void GameState::OnExit()
@@ -90,5 +94,5 @@ void GameState::DrawAimingLine() const
 
     const Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), camera);
 
-    DrawLine(character.GetRect().x, character.GetRect().y, worldMousePos.x, worldMousePos.y, YELLOW);
+    DrawLine(character.GetRect().x + + GameConstants::CHARACTER_WIDTH / 2, character.GetRect().y + + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
 }
