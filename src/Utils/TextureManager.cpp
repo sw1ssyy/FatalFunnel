@@ -8,16 +8,16 @@
 
 Texture2D& TextureManager::Get(const std::string& assetId)
 {
-    return cache[assetId];
+    return _cache[assetId];
 }
 
 
 void TextureManager::Load(const std::string& assetId)
 {
-    if (cache.find(assetId) == cache.end())
+    if (_cache.find(assetId) == _cache.end())
     {
         TraceLog(LOG_INFO, "Texture Loaded: %s", assetId.c_str());
-        cache[assetId] = LoadTexture(assetId.c_str());
+        _cache[assetId] = LoadTexture(assetId.c_str());
     }
 }
 
@@ -38,9 +38,9 @@ void TextureManager::LoadAll()
 
 void TextureManager::UnloadAll()
 {
-    for (auto& pair : cache)
+    for (auto& pair : _cache)
     {
         UnloadTexture(pair.second);
     }
-    cache.clear();
+    _cache.clear();
 }

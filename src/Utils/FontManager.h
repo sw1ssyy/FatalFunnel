@@ -15,20 +15,26 @@ public:
     Font& Get(const std::string& assetId);
 
     void LoadAll();
+
     void UnloadAll();
 
 private:
     FontManager() = default;
+
     ~FontManager() = default;
+
     void Load(const std::string& assetId, int fontSize = 32);
 
     // Delete copy/move semantics
     FontManager(const FontManager&) = delete;
+
     FontManager(FontManager&&) = delete;
+
     FontManager& operator=(const FontManager&) = delete;
+
     FontManager& operator=(FontManager&&) = delete;
 
-    std::unordered_map<std::string, Font> cache;
+    std::unordered_map<std::string, Font> _cache;
 };
 
 #endif //INC_TOPDOWNSHOOTER_FONTMANAGER_H

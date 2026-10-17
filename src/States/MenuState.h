@@ -14,15 +14,19 @@ public:
     explicit MenuState(StateManager *manager): IState(manager){}
 
     void Draw() override;
+
     void Update() override;
+
     void OnEnter() override;
+
     void OnExit() override;
 
 private:
+    Button _startButton = {100,200, 600,100, "START"};
 
-    Button startButton = {100,200, 600,100, "START"};
-    Button helpButton = {100,400, 600,100, "HELP"};
-    Button exitButton = {100,600, 600,100, "EXIT"};
+    Button _helpButton = {100,400, 600,100, "HELP"};
+
+    Button _exitButton = {100,600, 600,100, "EXIT"};
 };
 
 #endif //TOPDOWNSHOOTER_MENUSTATE

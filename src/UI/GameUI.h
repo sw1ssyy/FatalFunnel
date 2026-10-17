@@ -10,7 +10,6 @@
 
 class GameUI
 {
-
 public:
     explicit GameUI(Character& character);
 

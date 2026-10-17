@@ -25,17 +25,17 @@ public:
 
 protected:
 
-    Rectangle buttonRect = {};
+    Rectangle _buttonRect = {};
 
-    std::string label = {};
+    std::string _label = {};
 
-    bool clicked = false;
+    bool _clicked = false;
 
-    Color hoveredColour = BLUE;
+    Color _hoveredColour = BLUE;
 
-    Color clickedColour = SKYBLUE;
+    Color _clickedColour = SKYBLUE;
 
-    Color defaultColour = DARKBLUE;
+    Color _defaultColour = DARKBLUE;
 
 private:
 

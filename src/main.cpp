@@ -19,7 +19,6 @@ int main()
 
     stateManager.SetState(MENU);
 
-
     while (!WindowShouldClose() && !stateManager.ShouldQuit())
     {
         BeginDrawing();
@@ -28,7 +27,7 @@ int main()
         stateManager.GetCurrentState().Update();
         EndDrawing();
     }
-
+    TextureManager::GetInstance().UnloadAll();
     CloseWindow();
     return 0;
 }

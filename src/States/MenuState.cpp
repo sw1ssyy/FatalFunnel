@@ -13,19 +13,19 @@ void MenuState::Draw()
 {
     DrawTextEx(FontManager::GetInstance().Get(AssetConstants::FONT_MAIN), GameConstants::GAME_NAME, {260,50}, 72,0, WHITE);
 
-    startButton.Draw();
-    helpButton.Draw();
-    exitButton.Draw();
+    _startButton.Draw();
+    _helpButton.Draw();
+    _exitButton.Draw();
 }
 
 void MenuState::Update()
 {
 
-    if (startButton.IsClicked())
+    if (_startButton.IsClicked())
     {
         stateManager->SetState(GAME);
     }
-    else if (exitButton.IsClicked())
+    else if (_exitButton.IsClicked())
     {
         stateManager->RequestQuit();
     }

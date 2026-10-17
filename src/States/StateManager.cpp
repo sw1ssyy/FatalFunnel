@@ -14,28 +14,28 @@ StateManager::StateManager()
 
 IState& StateManager::GetCurrentState()
 {
-    return *states.at(statePointer);
+    return *_states.at(_statePointer);
 }
 
 void StateManager::SetState(StateID state)
 {
-    statePointer = state;
+    _statePointer = state;
 
-    states.at(statePointer)->OnEnter();
+    _states.at(_statePointer)->OnEnter();
 }
 
 void StateManager::SetupStates()
 {
-    states[MENU] = std::make_unique<MenuState>(this);
-    states[GAME] = std::make_unique<GameState>(this);
+    _states[MENU] = std::make_unique<MenuState>(this);
+    _states[GAME] = std::make_unique<GameState>(this);
 }
 
 void StateManager::RequestQuit()
 {
-    quitRequested = true;
+    _quitRequested = true;
 }
 
 bool StateManager::ShouldQuit() const
 {
-    return quitRequested;
+    return _quitRequested;
 }

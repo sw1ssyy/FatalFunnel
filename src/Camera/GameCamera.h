@@ -11,18 +11,21 @@ class GameCamera
 {
 public:
     void Init(Vector2 target);
+
     void Update(Vector2 target, bool aiming);
 
     void Begin() const;
+
     void End() const;
 
     void Shake() const;
 
     Vector2 ScreenToWorld(Vector2 screenPos) const;
+
     Camera2D& Get();
 
 private:
-    Camera2D camera = {};
+    Camera2D _camera = {};
 };
 
 #endif //TOPDOWNSHOOTER_GAMECAMERA

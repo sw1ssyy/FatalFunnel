@@ -24,7 +24,7 @@ namespace
 
 GameState::GameState(StateManager *manager)
     : IState(manager)
-    , character(CharacterAnimations(
+    , _character(CharacterAnimations(
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6, 5),
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6, 5),
@@ -35,11 +35,11 @@ GameState::GameState(StateManager *manager)
 void GameState::Draw()
 {
     ClearBackground(DARKGRAY);
-    camera.Begin();
-    character.Draw();
+    _camera.Begin();
+    _character.Draw();
     DrawAimingLine();
-    camera.End();
-    ui.DrawAmmo();
+    _camera.End();
+    _ui.DrawAmmo();
 }
 
 void GameState::Update()
@@ -52,20 +52,20 @@ void GameState::Update()
     InputManager::GetInstance().Poll();
     const PlayerInput& input = InputManager::GetInstance().Get();
 
-    camera.Update(camera.Get().target, input.aim);
+    _camera.Update(_camera.Get().target, input.aim);
 
-    const Vector2 worldMousePos = camera.ScreenToWorld(GetMousePosition());
+    const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    character.Update(input, worldMousePos);
+    _character.Update(input, worldMousePos);
 
-    camera.Update({character.GetRect().x, character.GetRect().y}, input.aim);
+    _camera.Update({_character.GetRect().x, _character.GetRect().y}, input.aim);
 }
 
 void GameState::OnEnter()
 {
-    character.SetPosition(400, 1600);
+    _character.SetPosition(400, 1600);
 
-    camera.Init({character.GetRect().x, character.GetRect().y});
+    _camera.Init({_character.GetRect().x, _character.GetRect().y});
 }
 
 void GameState::OnExit()
@@ -80,7 +80,7 @@ void GameState::DrawAimingLine() const
         return;
     }
 
-    const Vector2 worldMousePos = camera.ScreenToWorld(GetMousePosition());
+    const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    DrawLine(character.GetRect().x + + GameConstants::CHARACTER_WIDTH / 2, character.GetRect().y + + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
+    DrawLine(_character.GetRect().x + + GameConstants::CHARACTER_WIDTH / 2, _character.GetRect().y + + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
 }

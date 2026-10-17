@@ -14,7 +14,6 @@
 class StateManager
 {
 public:
-
     StateManager();
 
     IState& GetCurrentState();
@@ -28,11 +27,11 @@ public:
     bool ShouldQuit() const;
 
 private:
-    std::array<std::unique_ptr<IState>, COUNT> states;
+    std::array<std::unique_ptr<IState>, COUNT> _states;
 
-    int statePointer = 0;
+    int _statePointer = 0;
 
-    bool quitRequested = false;
+    bool _quitRequested = false;
 };
 
 

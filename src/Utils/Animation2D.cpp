@@ -7,73 +7,73 @@
 
 
 Animation2D::Animation2D(Texture2D* texture, int maxFrames, float tickRate, int columns, int rows)
-    : texture(texture), maxFrames(maxFrames),frameIndex(0),deltaTime(0),isStarted(false),isFinished(false), tickRate(tickRate),sheetColumns(columns), sheetRows(rows)
+    : _texture(texture), _maxFrames(maxFrames), _frameIndex(0), _deltaTime(0), _isStarted(false), _isFinished(false), _tickRate(tickRate), _sheetColumns(columns), _sheetRows(rows)
 {}
 
 Rectangle Animation2D::GetSourceRect(int frameIndex) const
 {
-    const int column = frameIndex % sheetColumns;
-    const int row = frameIndex / sheetColumns;
-    const float frameWidth = static_cast<float>(texture->width) / sheetColumns;
-    const float frameHeight = static_cast<float>(texture->height) / sheetRows;
+    const int column = frameIndex % _sheetColumns;
+    const int row = frameIndex / _sheetColumns;
+    const float frameWidth = static_cast<float>(_texture->width) / _sheetColumns;
+    const float frameHeight = static_cast<float>(_texture->height) / _sheetRows;
 
     return Rectangle{ column * frameWidth, row * frameHeight, frameWidth, frameHeight };
 }
 
 Texture2D* Animation2D::GetTexture() const
 {
-    return texture;
+    return _texture;
 }
 
 int Animation2D::GetMaxFrames() const
 {
-    return maxFrames;
+    return _maxFrames;
 }
 
 int Animation2D::GetFrameIndex() const
 {
-    return frameIndex;
+    return _frameIndex;
 }
 
 bool Animation2D::IsFinished() const
 {
-    return isFinished;
+    return _isFinished;
 }
 
 void Animation2D::Start()
 {
-    isStarted = true;
+    _isStarted = true;
 
     Interpolate();
 }
 
 void Animation2D::Stop()
 {
-    isStarted = false;
+    _isStarted = false;
 }
 
 void Animation2D::Reset()
 {
-    frameIndex = 0;
-    deltaTime = 0;
-    isFinished = false;
+    _frameIndex = 0;
+    _deltaTime = 0;
+    _isFinished = false;
 }
 
 void Animation2D::Interpolate()
 {
-    if (isStarted)
+    if (_isStarted)
     {
-        deltaTime += GetFrameTime();
+        _deltaTime += GetFrameTime();
 
-        if (deltaTime > tickRate)
+        if (_deltaTime > _tickRate)
         {
-            deltaTime = 0;
-            frameIndex++;
+            _deltaTime = 0;
+            _frameIndex++;
         }
-        if (frameIndex >= maxFrames)
+        if (_frameIndex >= _maxFrames)
         {
-            frameIndex = 0;
-            isFinished = true;
+            _frameIndex = 0;
+            _isFinished = true;
         }
     }
 }

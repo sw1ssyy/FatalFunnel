@@ -8,10 +8,10 @@
 
 void InputManager::Poll()
 {
-    input.aim = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-    input.fire = input.aim && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
-    input.reload = IsKeyPressed(KEY_R);
-    input.sprint = IsKeyDown(KEY_LEFT_SHIFT);
+    _input.aim = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+    _input.fire = _input.aim && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+    _input.reload = IsKeyPressed(KEY_R);
+    _input.sprint = IsKeyDown(KEY_LEFT_SHIFT);
 
     Vector2 move = {
         static_cast<float>(IsKeyDown(KEY_D)) - static_cast<float>(IsKeyDown(KEY_A)),
@@ -25,10 +25,10 @@ void InputManager::Poll()
         move.x /= length;
         move.y /= length;
     }
-    input.move = move;
+    _input.move = move;
 }
 
 const PlayerInput& InputManager::Get() const
 {
-    return input;
+    return _input;
 }

@@ -9,25 +9,41 @@ public:
     Animation2D(Texture2D* texture, int maxFrames, float tickRate, int columns, int rows);
 
     Rectangle GetSourceRect(int frameIndex) const;
+
     Texture2D* GetTexture() const;
+
     int GetMaxFrames() const;
+
     int GetFrameIndex()const;
+
     bool IsFinished() const;
+
     void Interpolate();
+
     void Start();
+
     void Stop();
+
     void Reset();
 
 private:
-    Texture2D* texture;
-    int maxFrames;
-    float deltaTime;
-    int frameIndex;
-    bool isStarted;
-    bool isFinished;
-    float tickRate;
-    int sheetColumns;
-    int sheetRows;
+    Texture2D* _texture;
+
+    int _maxFrames;
+
+    float _deltaTime;
+
+    int _frameIndex;
+
+    bool _isStarted;
+
+    bool _isFinished;
+
+    float _tickRate;
+
+    int _sheetColumns;
+
+    int _sheetRows;
 };
 
 #endif //INC_TOPDOWNSHOOTER_ANIMATION2D_H

@@ -13,9 +13,13 @@
 struct CharacterAnimations
 {
     Animation2D idleAnimation;
+
     Animation2D aimAnimation;
+
     Animation2D shootAnimation;
+
     Animation2D runAnimation;
+
     Animation2D reloadAnimation;
 
     CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim, Animation2D runAnim,
@@ -40,36 +44,49 @@ public:
     void SetPosition(float x, float y);
 
     CharacterAnimations GetCharacterAnimations() const;
+
     CharacterState GetState() const;
+
     int GetCurrentAmmo() const;
 
     void Update(const PlayerInput &input, Vector2 worldMousePos);
 
     void Draw();
+
     void DrawIdle(int index) const;
+
     void DrawAim(int index) const;
+
     void DrawShoot(int index) const;
+
     void DrawReload(int index) const;
 
 private:
     void UpdateState(const PlayerInput &input);
+
     void SetState(CharacterState newState);
+
     void UpdateAnimations();
+
     Animation2D &GetAnimation(CharacterState characterState);
 
     void HandleMovement(const PlayerInput &input);
+
     void HandleShoot();
 
-    CharacterAnimations animations;
-    CharacterState state = CharacterState::Idle;
+    CharacterAnimations _animations;
 
-    Rectangle characterRect = {};
-    float rotation = 0.0f;
+    CharacterState _state = CharacterState::Idle;
 
-    float shootTimer = 0.0f;
+    Rectangle _characterRect = {};
 
-    int magazineSize = GameConstants::DEFAULT_MAGAZINE_SIZE;
-    int currentAmmo = GameConstants::DEFAULT_MAGAZINE_SIZE;
+    float _rotation = 0.0f;
+
+    float _shootTimer = 0.0f;
+
+    int _magazineSize = GameConstants::DEFAULT_MAGAZINE_SIZE;
+
+    int _currentAmmo = GameConstants::DEFAULT_MAGAZINE_SIZE;
 };
 
 #endif //TOPDOWNSHOOTER_ICHARACTER
