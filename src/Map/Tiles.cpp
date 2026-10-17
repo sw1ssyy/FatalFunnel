@@ -8,7 +8,7 @@
 #include "../Constants/AssetConstants.h"
 #include "../Utils/TextureManager.h"
 
-Tiles::Tiles(int type, int row, int column) : _type(type), _row(row), _column(column)
+Tiles::Tiles(int type, int row, int column) : _type(static_cast<TileTypes>(type)), _row(row), _column(column)
 {
     SetupTile();
 }
@@ -34,6 +34,11 @@ void Tiles::SetupTile()
 bool Tiles::IsSolid() const
 {
     return _type == BRICK;
+}
+
+TileTypes Tiles::GetTileType() const
+{
+    return _type;
 }
 
 void Tiles::Draw()

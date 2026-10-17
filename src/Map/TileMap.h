@@ -19,12 +19,12 @@ public:
 
     void Draw();
 
+    Tiles GetTile(int x, int y) const;
+
 private:
     std::vector<Tiles> _tiles;
 
     void LoadFromCsv(const std::string& path);
-
-    bool IsSolid(int x, int y);
 
     const int _tileMaxSize = 10;
 };

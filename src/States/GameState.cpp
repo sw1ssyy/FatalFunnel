@@ -33,7 +33,6 @@ void GameState::Draw()
     _character.Draw();
     DrawAimingLine();
     _camera.End();
-    _ui.DrawAmmo();
 }
 
 void GameState::Update()

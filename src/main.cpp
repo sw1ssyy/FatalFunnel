@@ -6,14 +6,17 @@
 #include "States/StateManager.h"
 #include "Utils/TextureManager.h"
 #include "Utils/FontManager.h"
+#include "Utils/SoundManager.h"
 
 int main()
 {
     InitWindow(GameConstants::SCREEN_WIDTH, GameConstants::SCREEN_HEIGHT, GameConstants::GAME_NAME);
+    InitAudioDevice();
     SetTargetFPS(60);
 
     TextureManager::GetInstance().LoadAll();
     FontManager::GetInstance().LoadAll();
+    SoundManager::GetInstance().LoadAll();
 
     StateManager stateManager = {};
 
@@ -29,6 +32,8 @@ int main()
     }
     TextureManager::GetInstance().UnloadAll();
     FontManager::GetInstance().UnloadAll();
+    SoundManager::GetInstance().UnloadAll();
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

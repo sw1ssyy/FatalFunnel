@@ -25,7 +25,7 @@ bool TileMap::IsMoveAllowed(float x, float y)
         return false;
     }
 
-    return !IsSolid(gridX, gridY);
+    return !GetTile(gridX, gridY).IsSolid();
 }
 
 void TileMap::Draw()
@@ -64,7 +64,8 @@ void TileMap::LoadFromCsv(const std::string &path)
     }
 }
 
-bool TileMap::IsSolid(int x, int y)
+Tiles TileMap::GetTile(int x, int y) const
 {
-    return _tiles.at(y * _tileMaxSize + x).IsSolid();
+    return _tiles.at(y * _tileMaxSize + x);
 }
+

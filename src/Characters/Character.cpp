@@ -4,8 +4,11 @@
 #include "Character.h"
 
 #include <cmath>
+
+#include "../Constants/AssetConstants.h"
 #include "../Map/TileMap.h"
 #include "../Utils/DrawUtils.h"
+#include "../Utils/SoundManager.h"
 
 CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim,
                                          Animation2D runAnim, Animation2D reloadAnim)
@@ -95,6 +98,13 @@ void Character::UpdateState(const PlayerInput& input)
         _animations.shootAnimation.Reset();
         HandleShoot();
     }
+    else if (input.fire && _currentAmmo == 0)
+    {
+        if (!IsSoundPlaying(SoundManager::GetInstance().Get(AssetConstants::SOUND_EMPTY_GUN)))
+        {
+            PlaySound(SoundManager::GetInstance().Get(AssetConstants::SOUND_EMPTY_GUN));
+        }
+    }
     else
     {
         SetState(CharacterState::Aim);
@@ -142,7 +152,13 @@ Animation2D& Character::GetAnimation(const CharacterState characterState)
 
 void Character::HandleMovement(const PlayerInput& input, TileMap& map)
 {
+    if (input.move.x == 0.0f && input.move.y == 0.0f)
+    {
+        return;
+    }
+
     const float speed = input.sprint ? GameConstants::PLAYER_SPRINT_SPEED : GameConstants::PLAYER_WALK_SPEED;
+    const Vector2 previousPosition = {_characterRect.x, _characterRect.y};
 
     const float nextX = _characterRect.x + input.move.x * speed;
     if (map.IsMoveAllowed(nextX + _characterRect.width / 2, _characterRect.y + _characterRect.height / 2))
@@ -155,6 +171,17 @@ void Character::HandleMovement(const PlayerInput& input, TileMap& map)
     {
         _characterRect.y = nextY;
     }
+
+    const bool hasMoved = _characterRect.x != previousPosition.x || _characterRect.y != previousPosition.y;
+
+    TileTypes type = map.GetTile((nextX + _characterRect.width / 2) / 128 ,(nextY + _characterRect.height / 2) / 128).GetTileType();
+
+    Sound sound = type == PAVEMENT? SoundManager::GetInstance().Get(AssetConstants::SOUND_PAVEMENT_STEP) : SoundManager::GetInstance().Get(AssetConstants::SOUND_GRASS_STEP);
+
+    if (hasMoved && !IsSoundPlaying(sound))
+    {
+        PlaySound(sound);
+    }
 }
 
 void Character::HandleShoot()
@@ -164,6 +191,9 @@ void Character::HandleShoot()
         TraceLog(LOG_INFO, "Character: out of ammo");
         return;
     }
+
+    PlaySound(SoundManager::GetInstance().Get(AssetConstants::SOUND_GUNSHOT_SOUND));
+
 
     _currentAmmo--;
 }

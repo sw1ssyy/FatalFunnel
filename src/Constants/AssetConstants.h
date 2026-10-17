@@ -25,6 +25,12 @@ struct AssetConstants
     // Tileset
     static constexpr const char* MAP_TILESET = "../resources/Map/tileset_128.png";
 
+    // Sounds
+    static constexpr const char* SOUND_GRASS_STEP = "../resources/Sounds/grass_step.mp3";
+    static constexpr const char* SOUND_PAVEMENT_STEP = "../resources/Sounds/pavement_step.mp3";
+    static constexpr const char* SOUND_GUNSHOT_SOUND = "../resources/Sounds/gunshot_sound.mp3";
+    static constexpr const char* SOUND_EMPTY_GUN = "../resources/Sounds/empty_gun.mp3";
+
     // Fonts
     static constexpr const char* FONT_MAIN = "../resources/Fonts/Rajdhani-Medium.ttf";
 

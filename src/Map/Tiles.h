@@ -24,10 +24,12 @@ public:
 
     bool IsSolid() const;
 
+    TileTypes GetTileType() const;
+
     void Draw();
 
 private:
-    int _type;
+    TileTypes _type;
 
     int _row;
 
