@@ -14,19 +14,21 @@
 class StateManager
 {
 public:
-    StateManager();
+    StateManager() = default;
 
     IState& GetCurrentState();
 
-    void SetState(StateID state);
+    void Init();
 
-    void SetupStates();
+    void SetState(StateID state);
 
     void RequestQuit();
 
     bool ShouldQuit() const;
 
 private:
+    void SetupStates();
+
     std::array<std::unique_ptr<IState>, COUNT> _states;
 
     int _statePointer = 0;

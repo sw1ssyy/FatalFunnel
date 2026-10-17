@@ -7,18 +7,24 @@
 #include "GameState.h"
 #include "MenuState.h"
 
-StateManager::StateManager()
-{
-    SetupStates();
-}
-
 IState& StateManager::GetCurrentState()
 {
     return *_states.at(_statePointer);
 }
 
+void StateManager::Init()
+{
+    SetupStates();
+
+    _statePointer = MENU;
+
+    _states.at(_statePointer)->OnEnter();
+}
+
 void StateManager::SetState(StateID state)
 {
+    _states.at(_statePointer)->OnExit();
+
     _statePointer = state;
 
     _states.at(_statePointer)->OnEnter();

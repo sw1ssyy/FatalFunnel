@@ -17,6 +17,8 @@ public:
 
     bool IsClicked() const;
 
+    void ResetClicked();
+
     void Draw();
 
     void OnHover();

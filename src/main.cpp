@@ -17,17 +17,18 @@ int main()
 
     StateManager stateManager = {};
 
-    stateManager.SetState(MENU);
+    stateManager.Init();
 
     while (!WindowShouldClose() && !stateManager.ShouldQuit())
     {
+        stateManager.GetCurrentState().Update();
         BeginDrawing();
         ClearBackground(DARKGREEN);
         stateManager.GetCurrentState().Draw();
-        stateManager.GetCurrentState().Update();
         EndDrawing();
     }
     TextureManager::GetInstance().UnloadAll();
+    FontManager::GetInstance().UnloadAll();
     CloseWindow();
     return 0;
 }

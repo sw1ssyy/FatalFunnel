@@ -34,6 +34,10 @@ void MenuState::Update()
 void MenuState::OnEnter()
 {
     TraceLog(LOG_INFO, "MenuState: Enter");
+
+    _startButton.ResetClicked();
+    _helpButton.ResetClicked();
+    _exitButton.ResetClicked();
 }
 
 void MenuState::OnExit()

@@ -26,6 +26,11 @@ bool Button::IsClicked() const
     return _clicked;
 }
 
+void Button::ResetClicked()
+{
+    _clicked = false;
+}
+
 void Button::Draw()
 {
     _clicked = false;
