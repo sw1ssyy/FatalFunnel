@@ -29,7 +29,9 @@ GameState::GameState(StateManager *manager)
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6, 5),
         LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM, 30, GameConstants::FRAME_TIME_60, 6, 5),
-        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)))
+        LoadAnimation(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)
+        )),
+    _ui(_character)
 {}
 
 void GameState::Draw()
@@ -44,15 +46,8 @@ void GameState::Draw()
 
 void GameState::Update()
 {
-    if (IsKeyPressed(KEY_LEFT_ALT))
-    {
-        stateManager->SetState(MENU);
-    }
-
     InputManager::GetInstance().Poll();
-    const PlayerInput& input = InputManager::GetInstance().Get();
-
-    _camera.Update(_camera.Get().target, input.aim);
+    const PlayerInput &input = InputManager::GetInstance().Get();
 
     const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
@@ -82,5 +77,5 @@ void GameState::DrawAimingLine() const
 
     const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    DrawLine(_character.GetRect().x + + GameConstants::CHARACTER_WIDTH / 2, _character.GetRect().y + + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
+    DrawLine(_character.GetRect().x + GameConstants::CHARACTER_WIDTH / 2, _character.GetRect().y + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
 }

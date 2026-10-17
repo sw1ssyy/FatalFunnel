@@ -169,8 +169,6 @@ void Character::Draw()
         case CharacterState::Shoot:  DrawShoot(GetAnimation(_state).GetFrameIndex());  break;
         case CharacterState::Reload: DrawReload(GetAnimation(_state).GetFrameIndex()); break;
     }
-
-    DrawRectangleLinesEx(GetRect(),3,YELLOW);
 }
 
 void Character::DrawIdle(const int index) const

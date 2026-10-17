@@ -26,9 +26,9 @@ public:
     void DrawAimingLine() const;
 
 private:
-    GameUI _ui = GameUI(_character);
-
     Character _character;
+
+    GameUI _ui;
 
     GameCamera _camera;
 };
