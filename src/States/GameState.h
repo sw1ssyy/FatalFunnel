@@ -6,6 +6,7 @@
 #define TOPDOWNSHOOTER_GAMESTATE
 
 #include "IState.h"
+#include "../Camera/GameCamera.h"
 #include "../Characters/Character.h"
 #include "../UI/GameUI.h"
 class GameState : public IState
@@ -18,13 +19,12 @@ public:
     void OnEnter() override;
     void OnExit() override;
 
-    void ShakeCamera() const;
     void DrawAimingLine() const;
 
 private:
-    GameUI ui = {camera, character};
+    GameUI ui = GameUI(character);
     Character character;
-    Camera2D camera = {};
+    GameCamera camera;
 };
 
 #endif //TOPDOWNSHOOTER_GAMESTATE

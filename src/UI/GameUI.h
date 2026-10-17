@@ -12,13 +12,14 @@ class GameUI
 {
 
 public:
-    GameUI(Camera2D& camera2D, Character& character);
+    explicit GameUI(Character& character);
 
     void DrawAmmo();
 
 private:
     Character* _character;
-    Camera2D* _camera;
+
+    const int UI_DEFAULT_FONT_SIZE = 60;
 };
 
 

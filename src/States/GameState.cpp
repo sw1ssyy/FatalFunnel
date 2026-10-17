@@ -35,11 +35,11 @@ GameState::GameState(StateManager *manager)
 void GameState::Draw()
 {
     ClearBackground(DARKGRAY);
-    BeginMode2D(camera);
+    camera.Begin();
     character.Draw();
     DrawAimingLine();
+    camera.End();
     ui.DrawAmmo();
-    EndMode2D();
 }
 
 void GameState::Update()
@@ -52,37 +52,25 @@ void GameState::Update()
     InputManager::GetInstance().Poll();
     const PlayerInput& input = InputManager::GetInstance().Get();
 
-    camera.zoom = GameConstants::CAMERA_ZOOM_DEFAULT;
+    camera.Update(camera.Get().target, input.aim);
 
-    if (input.aim)
-    {
-        camera.zoom = GameConstants::CAMERA_ZOOM_AIM;
-    }
-
-    const Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), camera);
+    const Vector2 worldMousePos = camera.ScreenToWorld(GetMousePosition());
 
     character.Update(input, worldMousePos);
 
-    camera.target = {character.GetRect().x, character.GetRect().y};
+    camera.Update({character.GetRect().x, character.GetRect().y}, input.aim);
 }
 
 void GameState::OnEnter()
 {
     character.SetPosition(400, 1600);
 
-    camera.target = {character.GetRect().x, character.GetRect().y};
-    camera.offset = {GameConstants::SCREEN_WIDTH / 2,GameConstants::SCREEN_HEIGHT / 2};
-    camera.rotation = 0.0f;
-    camera.zoom = GameConstants::CAMERA_ZOOM_DEFAULT;
+    camera.Init({character.GetRect().x, character.GetRect().y});
 }
 
 void GameState::OnExit()
 {
     TraceLog(LOG_INFO, "GameState: Exit");
-}
-
-void GameState::ShakeCamera() const
-{
 }
 
 void GameState::DrawAimingLine() const
@@ -92,7 +80,7 @@ void GameState::DrawAimingLine() const
         return;
     }
 
-    const Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), camera);
+    const Vector2 worldMousePos = camera.ScreenToWorld(GetMousePosition());
 
     DrawLine(character.GetRect().x + + GameConstants::CHARACTER_WIDTH / 2, character.GetRect().y + + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
 }
