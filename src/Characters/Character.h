@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include "../Constants/GameConstants.h"
+#include "../Map/TileMap.h"
 #include "../Utils/Animation2D.h"
 #include "../Utils/InputManager.h"
 
@@ -49,7 +50,7 @@ public:
 
     int GetCurrentAmmo() const;
 
-    void Update(const PlayerInput &input, Vector2 worldMousePos);
+    void Update(const PlayerInput &input, Vector2 worldMousePos, TileMap& map);
 
     void Draw();
 
@@ -70,7 +71,7 @@ private:
 
     Animation2D &GetAnimation(CharacterState characterState);
 
-    void HandleMovement(const PlayerInput &input);
+    void HandleMovement(const PlayerInput &input, TileMap &map);
 
     void HandleShoot();
 

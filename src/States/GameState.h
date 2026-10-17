@@ -8,6 +8,7 @@
 #include "IState.h"
 #include "../Camera/GameCamera.h"
 #include "../Characters/Character.h"
+#include "../Map/TileMap.h"
 #include "../UI/GameUI.h"
 
 class GameState : public IState
@@ -31,6 +32,8 @@ private:
     GameUI _ui;
 
     GameCamera _camera;
+
+    TileMap _map;
 };
 
 #endif //TOPDOWNSHOOTER_GAMESTATE

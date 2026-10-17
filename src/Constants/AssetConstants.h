@@ -22,6 +22,9 @@ struct AssetConstants
     static constexpr const char* ANIM_OPERATOR_NVG_STOWED_FIRE_WITH_FLASH = "../resources/Operator/nvg_stowed/operator_fire_with_flash_nvg_stowed_sheet.png";
     static constexpr const char* ANIM_OPERATOR_NVG_STOWED_RELOAD = "../resources/Operator/nvg_stowed/operator_reload_nvg_stowed_sheet.png";
 
+    // Tileset
+    static constexpr const char* MAP_TILESET = "../resources/Map/tileset_128.png";
+
     // Fonts
     static constexpr const char* FONT_MAIN = "../resources/Fonts/Rajdhani-Medium.ttf";
 

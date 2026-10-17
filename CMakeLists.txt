@@ -4,9 +4,7 @@ project(TopDownShooter)
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp src/*.h)
-add_executable(TopDownShooter ${SOURCES}
-        src/UI/GameUI.cpp
-        src/UI/GameUI.h)
+add_executable(TopDownShooter ${SOURCES})
 
 # raylib (prebuilt, vendored in external/raylib)
 set(RAYLIB_DIR ${CMAKE_SOURCE_DIR}/external/raylib)

@@ -3,11 +3,12 @@
 //
 #include "Animation2D.h"
 
+#include "TextureManager.h"
 #include "../Constants/GameConstants.h"
 
 
-Animation2D::Animation2D(Texture2D* texture, int maxFrames, float tickRate, int columns, int rows)
-    : _texture(texture), _maxFrames(maxFrames), _frameIndex(0), _deltaTime(0), _isStarted(false), _isFinished(false), _tickRate(tickRate), _sheetColumns(columns), _sheetRows(rows)
+Animation2D::Animation2D(const char* texture, int maxFrames, float tickRate, int columns, int rows)
+    : _texture(&TextureManager::GetInstance().Get(texture)), _maxFrames(maxFrames), _frameIndex(0), _deltaTime(0), _isStarted(false), _isFinished(false), _tickRate(tickRate), _sheetColumns(columns), _sheetRows(rows)
 {}
 
 Rectangle Animation2D::GetSourceRect(int frameIndex) const

@@ -4,8 +4,7 @@
 #include "Character.h"
 
 #include <cmath>
-#include <string>
-
+#include "../Map/TileMap.h"
 #include "../Utils/DrawUtils.h"
 
 CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim,
@@ -50,10 +49,10 @@ int Character::GetCurrentAmmo() const
     return _currentAmmo;
 }
 
-void Character::Update(const PlayerInput& input, const Vector2 worldMousePos)
+void Character::Update(const PlayerInput& input, const Vector2 worldMousePos, TileMap& map)
 {
     UpdateState(input);
-    HandleMovement(input);
+    HandleMovement(input, map);
     UpdateAnimations();
 
     const Vector2 diff = {worldMousePos.x - _characterRect.x, worldMousePos.y - _characterRect.y};
@@ -141,12 +140,21 @@ Animation2D& Character::GetAnimation(const CharacterState characterState)
     }
 }
 
-void Character::HandleMovement(const PlayerInput& input)
+void Character::HandleMovement(const PlayerInput& input, TileMap& map)
 {
     const float speed = input.sprint ? GameConstants::PLAYER_SPRINT_SPEED : GameConstants::PLAYER_WALK_SPEED;
 
-    _characterRect.x += input.move.x * speed;
-    _characterRect.y += input.move.y * speed;
+    const float nextX = _characterRect.x + input.move.x * speed;
+    if (map.IsMoveAllowed(nextX + _characterRect.width / 2, _characterRect.y + _characterRect.height / 2))
+    {
+        _characterRect.x = nextX;
+    }
+
+    const float nextY = _characterRect.y + input.move.y * speed;
+    if (map.IsMoveAllowed(_characterRect.x + _characterRect.width / 2, nextY + _characterRect.height / 2))
+    {
+        _characterRect.y = nextY;
+    }
 }
 
 void Character::HandleShoot()

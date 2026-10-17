@@ -6,7 +6,7 @@
 class Animation2D
 {
 public:
-    Animation2D(Texture2D* texture, int maxFrames, float tickRate, int columns, int rows);
+    Animation2D(const char* texture, int maxFrames, float tickRate, int columns, int rows);
 
     Rectangle GetSourceRect(int frameIndex) const;
 

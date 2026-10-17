@@ -26,6 +26,10 @@ public:
 
 private:
     Camera2D _camera = {};
+
+    static constexpr float CAMERA_ZOOM_DEFAULT = 0.7f;
+
+    static constexpr float CAMERA_ZOOM_AIM = 0.55f;
 };
 
 #endif //TOPDOWNSHOOTER_GAMECAMERA

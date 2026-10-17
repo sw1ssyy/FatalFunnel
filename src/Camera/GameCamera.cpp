@@ -11,12 +11,12 @@ void GameCamera::Init(const Vector2 target)
     _camera.target = target;
     _camera.offset = {GameConstants::SCREEN_WIDTH / 2, GameConstants::SCREEN_HEIGHT / 2};
     _camera.rotation = 0.0f;
-    _camera.zoom = GameConstants::CAMERA_ZOOM_DEFAULT;
+    _camera.zoom = CAMERA_ZOOM_DEFAULT;
 }
 
 void GameCamera::Update(const Vector2 target, const bool aiming)
 {
-    _camera.zoom = aiming ? GameConstants::CAMERA_ZOOM_AIM : GameConstants::CAMERA_ZOOM_DEFAULT;
+    _camera.zoom = aiming ? CAMERA_ZOOM_AIM : CAMERA_ZOOM_DEFAULT;
     _camera.target = target;
 }
 
