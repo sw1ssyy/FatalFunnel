@@ -31,6 +31,11 @@ Rectangle Character::GetRect() const
     return _characterRect;
 }
 
+Vector2 Character::GetBodyCenter() const
+{
+    return {_characterRect.x + _characterRect.width / 2, _characterRect.y + _characterRect.height / 2};
+}
+
 void Character::SetPosition(const float x, const float y)
 {
     _characterRect.x = x - _characterRect.width / 2;
@@ -206,20 +211,25 @@ void Character::Draw()
 
 void Character::DrawIdle(const int index) const
 {
-    DrawUtils::DrawAnimation(_animations.idleAnimation, index, {_characterRect.x + GameConstants::CHARACTER_WIDTH / 2, _characterRect.y + GameConstants::CHARACTER_HEIGHT / 2}, _rotation);
+    DrawUtils::DrawAnimation(_animations.idleAnimation, index, GetBodyCenter(), _rotation);
 }
 
 void Character::DrawAim(const int index) const
 {
-    DrawUtils::DrawAnimation(_animations.aimAnimation, index, {_characterRect.x + GameConstants::CHARACTER_WIDTH / 2, _characterRect.y + GameConstants::CHARACTER_HEIGHT / 2}, _rotation);
+    DrawUtils::DrawAnimation(_animations.aimAnimation, index, GetBodyCenter(), _rotation);
 }
 
 void Character::DrawShoot(const int index) const
 {
-    DrawUtils::DrawAnimation(_animations.shootAnimation, index, {_characterRect.x + GameConstants::CHARACTER_WIDTH / 2, _characterRect.y + GameConstants::CHARACTER_HEIGHT / 2}, _rotation);
+    DrawUtils::DrawAnimation(_animations.shootAnimation, index, GetBodyCenter(), _rotation);
 }
 
 void Character::DrawReload(const int index) const
 {
-    DrawUtils::DrawAnimation(_animations.reloadAnimation, index, {_characterRect.x + GameConstants::CHARACTER_WIDTH / 2, _characterRect.y + GameConstants::CHARACTER_HEIGHT / 2}, _rotation);
+    DrawUtils::DrawAnimation(_animations.reloadAnimation, index, GetBodyCenter(), _rotation);
+}
+
+float Character::GetRotation() const
+{
+    return _rotation;
 }

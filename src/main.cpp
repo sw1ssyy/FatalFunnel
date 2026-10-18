@@ -26,7 +26,6 @@ int main()
     {
         stateManager.GetCurrentState().Update();
         BeginDrawing();
-        ClearBackground(DARKGREEN);
         stateManager.GetCurrentState().Draw();
         EndDrawing();
     }

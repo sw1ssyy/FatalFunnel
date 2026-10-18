@@ -42,6 +42,8 @@ public:
 
     Rectangle GetRect() const;
 
+    Vector2 GetBodyCenter() const;
+
     void SetPosition(float x, float y);
 
     CharacterAnimations GetCharacterAnimations() const;
@@ -61,6 +63,8 @@ public:
     void DrawShoot(int index) const;
 
     void DrawReload(int index) const;
+
+    float GetRotation() const;
 
 private:
     void UpdateState(const PlayerInput &input);

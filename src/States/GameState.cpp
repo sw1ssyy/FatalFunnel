@@ -27,10 +27,11 @@ GameState::GameState(StateManager *manager)
 
 void GameState::Draw()
 {
-    ClearBackground(DARKGRAY);
+    ClearBackground(BLACK);
     _camera.Begin();
     _map.Draw();
     _character.Draw();
+    _visionCone.Draw();
     DrawAimingLine();
     _camera.End();
 }
@@ -45,6 +46,7 @@ void GameState::Update()
     _character.Update(input, worldMousePos, _map);
 
     _camera.Update({_character.GetRect().x, _character.GetRect().y}, input.aim);
+    _visionCone.Update(_character.GetBodyCenter(), _character.GetRotation());
 }
 
 void GameState::OnEnter()
@@ -68,5 +70,5 @@ void GameState::DrawAimingLine() const
 
     const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    DrawLine(_character.GetRect().x + GameConstants::CHARACTER_WIDTH / 2, _character.GetRect().y + GameConstants::CHARACTER_HEIGHT / 2, worldMousePos.x, worldMousePos.y, YELLOW);
+    DrawLineV(_character.GetBodyCenter(), worldMousePos, YELLOW);
 }
