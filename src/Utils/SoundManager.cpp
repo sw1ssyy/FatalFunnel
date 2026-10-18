@@ -21,6 +21,23 @@ Sound& SoundManager::Get(const std::string& assetId)
     return it->second;
 }
 
+void SoundManager::Play(const std::string& assetId)
+{
+    PlaySound(Get(assetId));
+}
+
+void SoundManager::PlayIfIdle(const std::string& assetId)
+{
+    if (!IsPlaying(assetId))
+    {
+        Play(assetId);
+    }
+}
+
+bool SoundManager::IsPlaying(const std::string& assetId)
+{
+    return IsSoundPlaying(Get(assetId));
+}
 
 void SoundManager::Load(const std::string& assetId)
 {

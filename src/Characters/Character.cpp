@@ -100,10 +100,7 @@ void Character::UpdateState(const PlayerInput& input)
     }
     else if (input.fire && _currentAmmo == 0)
     {
-        if (!IsSoundPlaying(SoundManager::GetInstance().Get(AssetConstants::SOUND_EMPTY_GUN)))
-        {
-            PlaySound(SoundManager::GetInstance().Get(AssetConstants::SOUND_EMPTY_GUN));
-        }
+        SoundManager::GetInstance().PlayIfIdle(AssetConstants::SOUND_EMPTY_GUN);
     }
     else
     {
@@ -176,11 +173,9 @@ void Character::HandleMovement(const PlayerInput& input, TileMap& map)
 
     TileTypes type = map.GetTile((nextX + _characterRect.width / 2) / 128 ,(nextY + _characterRect.height / 2) / 128).GetTileType();
 
-    Sound sound = type == PAVEMENT? SoundManager::GetInstance().Get(AssetConstants::SOUND_PAVEMENT_STEP) : SoundManager::GetInstance().Get(AssetConstants::SOUND_GRASS_STEP);
-
-    if (hasMoved && !IsSoundPlaying(sound))
+    if (hasMoved)
     {
-        PlaySound(sound);
+        SoundManager::GetInstance().PlayIfIdle(type == PAVEMENT ? AssetConstants::SOUND_PAVEMENT_STEP : AssetConstants::SOUND_GRASS_STEP);
     }
 }
 
@@ -192,7 +187,7 @@ void Character::HandleShoot()
         return;
     }
 
-    PlaySound(SoundManager::GetInstance().Get(AssetConstants::SOUND_GUNSHOT_SOUND));
+    SoundManager::GetInstance().Play(AssetConstants::SOUND_GUNSHOT_SOUND);
 
 
     _currentAmmo--;

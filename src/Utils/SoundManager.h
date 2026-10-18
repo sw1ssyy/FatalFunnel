@@ -12,13 +12,19 @@ public:
         return instance;
     }
 
-    Sound& Get(const std::string& assetId);
+    void Play(const std::string& assetId);
+
+    void PlayIfIdle(const std::string& assetId);
+
+    bool IsPlaying(const std::string& assetId);
 
     void LoadAll();
 
     void UnloadAll();
 
 private:
+    Sound& Get(const std::string& assetId);
+
     SoundManager() = default;
 
     ~SoundManager() = default;
