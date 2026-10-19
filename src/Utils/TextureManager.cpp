@@ -38,6 +38,12 @@ void TextureManager::LoadAll()
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD);
+    //
+    Load(AssetConstants::ANIM_INSURGENT_FIRE_WITH_FLASH);
+    Load(AssetConstants::ANIM_INSURGENT_IDLE);
+    Load(AssetConstants::ANIM_INSURGENT_IDLE_LOW);
+    Load(AssetConstants::ANIM_INSURGENT_RELOAD);
+    //
     Load(AssetConstants::MAP_TILESET);
 }
 
