@@ -33,6 +33,5 @@ bool VisionCone::IsObjectVisible(Vector2 target)
 
 void VisionCone::Draw()
 {
-
     DrawCircleSectorLines(_centrePosition, 1000,_rotation - _sizeOffset,_rotation + _sizeOffset, 6 ,RED);
 }

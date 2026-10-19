@@ -19,7 +19,6 @@ GameState::GameState(StateManager *manager)
         Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6  , 5),
         Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
         Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6, 5),
-        Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM, 30, GameConstants::FRAME_TIME_60, 6, 5),
         Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)
         )),
     _ui(_character)

@@ -19,12 +19,9 @@ struct CharacterAnimations
 
     Animation2D shootAnimation;
 
-    Animation2D runAnimation;
-
     Animation2D reloadAnimation;
 
-    CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim, Animation2D runAnim,
-                        Animation2D reloadAnim);
+    CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim, Animation2D reloadAnim);
 };
 
 enum class CharacterState

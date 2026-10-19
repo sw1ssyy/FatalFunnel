@@ -10,12 +10,10 @@
 #include "../Utils/DrawUtils.h"
 #include "../Utils/SoundManager.h"
 
-CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim,
-                                         Animation2D runAnim, Animation2D reloadAnim)
+CharacterAnimations::CharacterAnimations(Animation2D idleAnim, Animation2D aimAnim, Animation2D shootAnim,Animation2D reloadAnim)
     : idleAnimation(idleAnim)
     , aimAnimation(aimAnim)
     , shootAnimation(shootAnim)
-    , runAnimation(runAnim)
     , reloadAnimation(reloadAnim)
 {}
 

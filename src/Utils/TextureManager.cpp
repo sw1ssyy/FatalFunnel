@@ -34,17 +34,10 @@ void TextureManager::Load(const std::string& assetId)
 
 void TextureManager::LoadAll()
 {
-    Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_WALK_AIM);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_WALK_AIM);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_WALK_LOW);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_IDLE);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_IDLE_LOW);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_FIRE_WITH_FLASH);
     Load(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD);
-    Load(AssetConstants::ANIM_OPERATOR_NVG_STOWED_RELOAD);
     Load(AssetConstants::MAP_TILESET);
 }
 
