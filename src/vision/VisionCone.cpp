@@ -18,11 +18,11 @@ void VisionCone::Update(Vector2 position, float rotation)
 
     if (InputManager::GetInstance().Get().aim)
     {
-        _sizeOffset = 25;
+        _sizeOffset = 30;
     }
     else
     {
-        _sizeOffset = 60;
+        _sizeOffset = 70;
     }
 }
 

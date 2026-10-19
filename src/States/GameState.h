@@ -35,8 +35,6 @@ private:
     GameCamera _camera;
 
     TileMap _map;
-
-    VisionCone _visionCone;
 };
 
 #endif //TOPDOWNSHOOTER_GAMESTATE

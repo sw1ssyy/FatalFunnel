@@ -30,7 +30,6 @@ void GameState::Draw()
     _camera.Begin();
     _map.Draw();
     _character.Draw();
-    _visionCone.Draw();
     DrawAimingLine();
     _camera.End();
 }
@@ -45,12 +44,11 @@ void GameState::Update()
     _character.Update(input, worldMousePos, _map);
 
     _camera.Update({_character.GetRect().x, _character.GetRect().y}, input.aim);
-    _visionCone.Update(_character.GetBodyCenter(), _character.GetRotation());
 }
 
 void GameState::OnEnter()
 {
-    _character.SetPosition(500, 350);
+    _character.SetPosition(170, 850);
 
     _camera.Init({_character.GetRect().x, _character.GetRect().y});
 }

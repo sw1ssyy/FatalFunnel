@@ -18,6 +18,8 @@ struct PlayerInput
     bool reload = false;    // true only on the frame the key is pressed
 
     bool sprint = false;
+
+    bool debug = false;
 };
 
 class InputManager

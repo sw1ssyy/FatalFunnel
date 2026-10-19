@@ -6,7 +6,7 @@
 #define TOPDOWNSHOOTER
 
 
-struct AssetConstants
+ struct AssetConstants
 {
     // Operator
     static constexpr const char* ANIM_OPERATOR_NVG_EQUIPPED_IDLE = "../resources/Operator/nvg_equipped/operator_nvg_equipped_idle_sheet.png";

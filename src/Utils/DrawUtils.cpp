@@ -11,7 +11,7 @@ void DrawUtils::DrawAnimation(const Animation2D& animation, int frameIndex, Vect
 
     const Rectangle destRect = { position.x, position.y, sourceRect.width, sourceRect.height };
 
-    const Vector2 origin = { sourceRect.width / 2, sourceRect.height / 2 };
+    const Vector2 origin = { 132, 100 };
 
     DrawTexturePro(*texture, sourceRect, destRect, origin, rotation, WHITE);
 }

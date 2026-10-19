@@ -12,6 +12,7 @@ void InputManager::Poll()
     _input.fire = _input.aim && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
     _input.reload = IsKeyPressed(KEY_R);
     _input.sprint = IsKeyDown(KEY_LEFT_SHIFT);
+    _input.debug = IsKeyPressed(KEY_INSERT);
 
     Vector2 move = {
         static_cast<float>(IsKeyDown(KEY_D)) - static_cast<float>(IsKeyDown(KEY_A)),
@@ -20,12 +21,18 @@ void InputManager::Poll()
 
     // Normalize so diagonals aren't faster than cardinal movement.
     const float length = std::sqrt(move.x * move.x + move.y * move.y);
+
     if (length > 0.0f)
     {
         move.x /= length;
         move.y /= length;
     }
     _input.move = move;
+
+    if (_input.debug)
+    {
+        TraceLog(LOG_INFO, "Debug Pressed!");
+    }
 }
 
 const PlayerInput& InputManager::Get() const
