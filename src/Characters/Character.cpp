@@ -93,7 +93,23 @@ CharacterState Character::GetState() const
     return _state;
 }
 
+void Character::SetState(const CharacterState newState)
+{
+    if (newState == _state)
+    {
+        return;
+    }
+
+    _state = newState;
+    GetAnimation(_state).Reset();
+}
+
 float Character::GetRotation() const
 {
     return _rotation;
+}
+
+void Character::SetRotation(float rotation)
+{
+    _rotation = rotation;
 }

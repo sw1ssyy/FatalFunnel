@@ -8,11 +8,6 @@ Insurgent::Insurgent(const CharacterAnimations &animations) : Character(animatio
 {
 }
 
-void Insurgent::SetRotation(float rotation)
-{
-    _rotation = rotation;
-}
-
 void Insurgent::Update()
 {
     SetRotation(90);

@@ -70,17 +70,6 @@ void Player::UpdateState(const PlayerInput &input)
     }
 }
 
-void Player::SetState(const CharacterState newState)
-{
-    if (newState == _state)
-    {
-        return;
-    }
-
-    _state = newState;
-    GetAnimation(_state).Reset();
-}
-
 void Player::UpdateAnimations()
 {
     _animations.idleAnimation.Stop();

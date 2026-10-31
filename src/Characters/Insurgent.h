@@ -12,8 +12,6 @@ class Insurgent : public Character
 public:
     explicit Insurgent(const CharacterAnimations &animations);
 
-    void SetRotation(float rotation);
-
     void Update();
 };
 

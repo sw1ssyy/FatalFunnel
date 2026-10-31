@@ -23,8 +23,6 @@ public:
 private:
     void UpdateState(const PlayerInput &input);
 
-    void SetState(CharacterState newState);
-
     void UpdateAnimations();
 
     void HandleMovement(const PlayerInput &input, TileMap &map);

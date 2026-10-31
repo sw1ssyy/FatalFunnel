@@ -50,6 +50,8 @@ public:
 
     float GetRotation() const;
 
+    void SetRotation(float rotation);
+
     Rectangle GetRect() const;
 
     Vector2 GetBodyCenter() const;
@@ -57,6 +59,8 @@ public:
     CharacterAnimations GetCharacterAnimations() const;
 
     CharacterState GetState() const;
+
+    void SetState(CharacterState newState);
 
 protected:
     CharacterAnimations _animations;
