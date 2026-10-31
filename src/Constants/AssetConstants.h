@@ -2,8 +2,8 @@
 // Created by johnc on 26/09/2026.
 //
 
-#ifndef TOPDOWNSHOOTER
-#define TOPDOWNSHOOTER
+#ifndef TOPDOWNSHOOTER_ASSETCONSTANTS
+#define TOPDOWNSHOOTER_ASSETCONSTANTS
 
 
  struct AssetConstants
@@ -35,4 +35,4 @@
 };
 
 
-#endif //TOPDOWNSHOOTER
+#endif //TOPDOWNSHOOTER_ASSETCONSTANTS

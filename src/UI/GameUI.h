@@ -5,18 +5,18 @@
 #ifndef TOPDOWNSHOOTER_GAMEUI
 #define TOPDOWNSHOOTER_GAMEUI
 #include "raylib.h"
-#include "../Characters/Character.h"
+#include "../Characters/Player.h"
 
 
 class GameUI
 {
 public:
-    explicit GameUI(Character& character);
+    explicit GameUI(Player& player);
 
     void DrawAmmo();
 
 private:
-    Character* _character;
+    Player* _player;
 
     const int UI_DEFAULT_FONT_SIZE = 60;
 };

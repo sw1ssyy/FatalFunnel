@@ -7,11 +7,11 @@
 #include <filesystem>
 #include <string>
 
-GameUI::GameUI(Character& character) : _character(&character)
+GameUI::GameUI(Player& player) : _player(&player)
 {
 }
 
 void GameUI::DrawAmmo()
 {
-    DrawText(std::to_string(_character->GetCurrentAmmo()).c_str(), 20, 20, UI_DEFAULT_FONT_SIZE , RED);
+    DrawText(std::to_string(_player->GetCurrentAmmo()).c_str(), 20, 20, UI_DEFAULT_FONT_SIZE , RED);
 }

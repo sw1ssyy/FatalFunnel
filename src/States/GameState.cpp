@@ -3,9 +3,6 @@
 //
 
 #include "GameState.h"
-
-#include <string>
-
 #include "raylib.h"
 #include "StateManager.h"
 #include "../Constants/AssetConstants.h"
@@ -15,21 +12,28 @@
 
 GameState::GameState(StateManager *manager)
     : IState(manager)
-    , _character(CharacterAnimations(
-        Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6  , 5),
-        Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
-        Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6, 5),
-        Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)
-        )),
-    _ui(_character)
-{}
+      , _player(CharacterAnimations(
+          Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6, 5),
+          Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
+          Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6,5),
+          Animation2D(AssetConstants::ANIM_OPERATOR_NVG_EQUIPPED_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)
+      )), _insurgent(CharacterAnimations(
+      Animation2D(AssetConstants::ANIM_INSURGENT_IDLE_LOW, 30, GameConstants::FRAME_TIME_60, 6, 5),
+Animation2D(AssetConstants::ANIM_INSURGENT_IDLE, 30, GameConstants::FRAME_TIME_60, 6, 5),
+Animation2D(AssetConstants::ANIM_INSURGENT_FIRE_WITH_FLASH, 30, GameConstants::FRAME_TIME_240, 6,5),
+Animation2D(AssetConstants::ANIM_INSURGENT_RELOAD, 30, GameConstants::FRAME_TIME_60, 6, 5)
+          )),
+      _ui(_player)
+{
+}
 
 void GameState::Draw()
 {
     ClearBackground(BLACK);
     _camera.Begin();
     _map.Draw();
-    _character.Draw();
+    _player.Draw();
+    _insurgent.Draw();
     DrawAimingLine();
     _camera.End();
 }
@@ -41,16 +45,20 @@ void GameState::Update()
 
     const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    _character.Update(input, worldMousePos, _map);
+    _player.Update(input, worldMousePos, _map);
 
-    _camera.Update({_character.GetRect().x, _character.GetRect().y}, input.aim);
+    _insurgent.Update();
+
+    _camera.Update({_player.GetRect().x, _player.GetRect().y}, input.aim);
 }
 
 void GameState::OnEnter()
 {
-    _character.SetPosition(170, 850);
+    _player.SetPosition(170, 850);
 
-    _camera.Init({_character.GetRect().x, _character.GetRect().y});
+    _insurgent.SetPosition(1200, 400);
+
+    _camera.Init({_player.GetRect().x, _player.GetRect().y});
 }
 
 void GameState::OnExit()
@@ -67,5 +75,5 @@ void GameState::DrawAimingLine() const
 
     const Vector2 worldMousePos = _camera.ScreenToWorld(GetMousePosition());
 
-    DrawLineV(_character.GetBodyCenter(), worldMousePos, YELLOW);
+    DrawLineV(_player.GetBodyCenter(), worldMousePos, YELLOW);
 }

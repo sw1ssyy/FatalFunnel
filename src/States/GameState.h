@@ -7,11 +7,10 @@
 
 #include "IState.h"
 #include "../Camera/GameCamera.h"
-#include "../Characters/Character.h"
+#include "../Characters/Insurgent.h"
+#include "../Characters/Player.h"
 #include "../Map/TileMap.h"
 #include "../UI/GameUI.h"
-#include "../vision/VisionCone.h"
-
 class GameState : public IState
 {
 public:
@@ -28,7 +27,9 @@ public:
     void DrawAimingLine() const;
 
 private:
-    Character _character;
+    Player _player;
+
+    Insurgent _insurgent;
 
     GameUI _ui;
 
