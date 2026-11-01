@@ -104,6 +104,16 @@ void Character::SetState(const CharacterState newState)
     GetAnimation(_state).Reset();
 }
 
+void Character::UpdateAnimations()
+{
+    _animations.idleAnimation.Stop();
+    _animations.aimAnimation.Stop();
+    _animations.shootAnimation.Stop();
+    _animations.reloadAnimation.Stop();
+
+    GetAnimation(_state).Start();
+}
+
 float Character::GetRotation() const
 {
     return _rotation;

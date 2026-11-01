@@ -13,6 +13,11 @@ public:
     explicit Insurgent(const CharacterAnimations &animations);
 
     void Update();
+
+    void UpdateAnimations() override;
+
+private:
+
 };
 
 

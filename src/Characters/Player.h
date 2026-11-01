@@ -23,7 +23,7 @@ public:
 private:
     void UpdateState(const PlayerInput &input);
 
-    void UpdateAnimations();
+    void UpdateAnimations() override;
 
     void HandleMovement(const PlayerInput &input, TileMap &map);
 

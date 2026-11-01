@@ -62,6 +62,8 @@ public:
 
     void SetState(CharacterState newState);
 
+    virtual void UpdateAnimations();
+
 protected:
     CharacterAnimations _animations;
 

@@ -72,12 +72,7 @@ void Player::UpdateState(const PlayerInput &input)
 
 void Player::UpdateAnimations()
 {
-    _animations.idleAnimation.Stop();
-    _animations.aimAnimation.Stop();
-    _animations.shootAnimation.Stop();
-    _animations.reloadAnimation.Stop();
-
-    GetAnimation(_state).Start();
+    Character::UpdateAnimations();
 
     if (_state == CharacterState::Reload && _animations.reloadAnimation.IsFinished())
     {

@@ -6,10 +6,15 @@
 
 Insurgent::Insurgent(const CharacterAnimations &animations) : Character(animations)
 {
+    SetRotation(0);
 }
 
 void Insurgent::Update()
 {
-    SetRotation(90);
-    GetAnimation(_state).Start();
+    UpdateAnimations();
+}
+
+void Insurgent::UpdateAnimations()
+{
+    Character::UpdateAnimations();
 }
